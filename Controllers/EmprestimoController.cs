@@ -18,5 +18,24 @@ namespace Biblioteca.Controllers
             IEnumerable<EmprestimoModel> emprestimos = _db.Emprestimo;
             return View(emprestimos);
         }
+
+        public IActionResult Cadastrar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Cadastrar(EmprestimoModel emprestimo)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Emprestimo.Add(emprestimo);
+                _db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
     }
 }
