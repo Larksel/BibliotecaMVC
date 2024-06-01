@@ -70,5 +70,37 @@ namespace Biblioteca.Controllers
 
             return View(emprestimo);
         }
-    }
+
+        [HttpGet]
+        public IActionResult Excluir(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            EmprestimoModel emprestimo = _db.Emprestimo.FirstOrDefault(x => x.Id == id);
+
+            if (emprestimo == null)
+            {
+                return NotFound();
+            }
+
+            return View(emprestimo);
+        }
+
+		[HttpPost]
+		public IActionResult Excluir(EmprestimoModel emprestimo)
+		{
+			if (emprestimo == null)
+			{
+                return NotFound();
+			}
+
+			_db.Emprestimo.Remove(emprestimo);
+			_db.SaveChanges();
+
+			return RedirectToAction("Index");
+		}
+	}
 }
